@@ -38,5 +38,5 @@ jobs:
       - name: Run multi-line script
         run: |
           echo "Hello from IP: ${{ steps.ip.outputs.ipv4 }}"
-          python hola-mundo.py
+          python hello_world.py
     
