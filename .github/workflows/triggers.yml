@@ -1,0 +1,42 @@
+name: Aprendiendo a usar triggers
+run-name: Paso 2 crear 3 triggers
+
+on:
+  push:  #PUSH
+    branches: ['main', 'aprendiendo-**']
+    paths: ['**.yml']
+
+  pull_request:  # PR
+    types: [opened, labeled]
+    branches: ['main', 'aprendiendo-**']
+    paths: ['**.yml']
+
+  schedule:  # SCHEDULE
+  - cron: '30 12 * * FRI'
+  
+  workflow_dispatch:  # WORKFLOW_DISPATCH
+
+jobs:
+  mi-job-mfbl:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clonar Repo en el Runner
+        uses: actions/checkout@v4
+      
+      - name: Setup Python Environment
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      
+      - name: Define Variable IP
+        id: ip
+        uses: haythem/public-ip@v1.3
+        
+      - name: Define Variable USERNAME   
+        run: echo "USERNAME=${{ github.actor }}" >> $GITHUB_ENV
+      
+      - name: Run multi-line script
+        run: |
+          echo "Hello from IP: ${{ steps.ip.outputs.ipv4 }}"
+          python hello_world.py
+    
