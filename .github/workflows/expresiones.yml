@@ -17,7 +17,6 @@ on:
 
 env:
   DAY_OF_WEEK: Monday
-  Greeting: Hi
   First_Name: ${{ github.actor }}
 
 jobs:
