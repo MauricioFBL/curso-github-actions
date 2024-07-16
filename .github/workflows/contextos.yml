@@ -1,5 +1,5 @@
-name: expresiones en actions
-run-name: expresiones-gh_actions
+name: econtextos en actions
+run-name: contextos-gh_actions
 
 on:
   push:
@@ -41,7 +41,7 @@ jobs:
       uses: haythem/public-ip@v1.3
 
     - name: Muestra IP
-      run: eche "Hola señor en ${{ steps.ip.outputs.ipv4 }}"
+      run: echo "Hola señor en ${{ steps.ip.outputs.ipv4 }}"
 
     - name: Set up Python 3.10
       uses: actions/setup-python@v3
