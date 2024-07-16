@@ -28,9 +28,9 @@ jobs:
         with:
           python-version: '3.10'
       
-      # - name: Define Variable IP
-      #   id: ip
-      #   uses: haythem/public-ip@v1.3
+      - name: Define Variable IP
+        id: ip
+        uses: haythem/public-ip@v1.3
         
       - name: Define Variable USERNAME   
         run: echo "USERNAME=${{ github.actor }}" >> $GITHUB_ENV
