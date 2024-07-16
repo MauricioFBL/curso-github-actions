@@ -1,0 +1,49 @@
+name: expresiones en actions
+run-name: expresiones-gh_actiions
+
+
+on:
+  push:
+    branches:
+      - main
+      - aprendiendo**
+
+  pull_request:
+    branches:
+      - main
+      - dev
+      - aprendiedo**
+      
+  workflow_dispatch: 
+
+env:
+  DAY_OF_WEEK: Monday
+  Greeting: Hi
+  First_Name: ${{ github.actor }}
+
+jobs:
+  mi-main-job:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: definir_rama
+      run: echo "ENVIRONMET=main" >> $GITHUB_ENV
+
+    - name: check-repo-changes
+      uses: actions/checkout@v3
+    
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.10"
+
+    - name: script-runing
+      run: python hello_world.py
+  
+  job-secundario:
+    runs-on: ubuntu-latest
+    env:
+      Greeting: Hello
+    steps:
+      - name: "Say Hello Mona it's Monday"
+        run: echo "$Greeting $First_Name. Today is $DAY_OF_WEEK!"        
