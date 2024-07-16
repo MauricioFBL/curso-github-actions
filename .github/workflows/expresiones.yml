@@ -27,6 +27,9 @@ jobs:
     - name: definir_rama
       run: echo "ENVIRONMET=main" >> $GITHUB_ENV
 
+    - name: definir_rama
+      run: echo "estamos en la rama $ENVIRONMET"
+
     - name: check-repo-changes
       uses: actions/checkout@v3
     
