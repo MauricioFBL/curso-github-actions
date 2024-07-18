@@ -1,4 +1,4 @@
-name: expresiones en actions
+name: Expresiones
 run-name: expresiones-gh_actions
 
 on:
@@ -14,6 +14,17 @@ on:
       - aprendiedo**
       
   workflow_dispatch: 
+    inputs:
+      edad:
+        description: 'tu edad'
+        required: true
+        default: 18
+        type: integer
+      
+      nombre:
+        description: 'tu nombre'
+        required: true
+        type: string
 
 env:
   DAY_OF_WEEK: Monday
@@ -47,4 +58,18 @@ jobs:
       Greeting: Hello
     steps:
       - name: "Say Hello it's Monday!"
-        run: echo "$Greeting $First_Name. Today is $DAY_OF_WEEK!"        
+        run: echo "$Greeting $First_Name. Today is $DAY_OF_WEEK!"   
+
+  job-dispatch-mayor:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.edad >= 18 }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: print_es_mayor
+      run: echo "${{ inputs.nombre }} es mayor de edad"
+
+  job-dispatch-menor:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.edad < 18 }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: print_es_mayor
+      run: echo "${{ inputs.nombre }} es menor de edad"
