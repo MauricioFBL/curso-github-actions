@@ -1,0 +1,65 @@
+name: variables
+run-name: variables-gh-actions
+
+on:
+  push:
+    branches:
+      - main
+      - aprendiendo**
+
+  pull_request:
+    branches:
+      - main
+      - dev
+      - aprendiedo**
+      
+  workflow_dispatch: 
+
+env:
+  DAY_OF_WEEK: Monday
+  First_Name: ${{ github.actor }}
+  ENVIRONMENT: ${{ github.ref_name }}
+
+jobs:
+  mi-main-job:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Use different secret based on environment
+      id: set-secret
+      run: |
+        if [ ${{ env.ENVIRONMENT }} == 'main' ]; then 
+          echo "SECRET=production" >> $GITHUB_ENV
+        else 
+          echo "SECRET=development" >> $GITHUB_ENV
+          fi
+
+    - name: Echo the secret
+      run: echo "The secret is $SECRET"
+
+    - name: check-repo-changes
+      uses: actions/checkout@v3
+    
+    - name: Define Variable IP
+      id: ip
+      uses: haythem/public-ip@v1.3
+
+    - name: Muestra IP
+      run: echo "Hola señor en ${{ steps.ip.outputs.ipv4 }}"
+
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.10"
+
+    - name: script-runing
+      run: python hello_world.py
+  
+  job-secundario:
+    runs-on: ubuntu-latest
+    env:
+      Greeting: Hello
+    steps:
+      - name: "Say Hello it's Monday!"
+        run: echo "$Greeting $First_Name. Today is $DAY_OF_WEEK! mi comida fav $FAV_FOOD"        
